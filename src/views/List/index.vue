@@ -1,13 +1,16 @@
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import { getBookList } from '@/service/api.js'
 
-const tableData = ref([{
-  id: 1,
-  title: '123',
-  author: '123',
+const tableData = ref([])
+const loading = ref(false);
 
-
-}])
+onMounted(() => {
+  loading.value = true;
+  getBookList().then(res => {
+    tableData.value = res;
+  }).finally(() => loading.value = false);
+})
 
 </script>
 
@@ -19,7 +22,7 @@ const tableData = ref([{
         List
       </el-breadcrumb-item>
     </el-breadcrumb>
-    <el-table :data="tableData" class="table" row-key="id">
+    <el-table v-loading="loading" :data="tableData" class="table" row-key="id">
       <el-table-column prop="title" label="Title" min-width="180" />
       <el-table-column prop="author" label="Author" min-width="180" />
       <el-table-column prop="year" label="Year" min-width="100" />

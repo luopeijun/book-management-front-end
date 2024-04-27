@@ -13,9 +13,11 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 8080,
     open: true,
+    cors: true,
     proxy: {
       '/api': {
-        target: "http://localhost:8081/",
+        target: 'http://localhost:8081',
+        rewrite: (path) => path.replace(/^\/api/, ''),
         changeOrigin: true
       }
     }
