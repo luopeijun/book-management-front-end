@@ -9,7 +9,9 @@ import Menu from '@/components/Menu/index.vue'
       <Menu />
     </el-aside>
     <el-container>
-      <RouterView />
+      <div class="container">
+        <RouterView />
+      </div>
     </el-container>
   </el-container>
 
@@ -18,5 +20,9 @@ import Menu from '@/components/Menu/index.vue'
 <style scoped>
 .aside {
   width: 200px;
+}
+.container {
+  padding: 0 20px;
+  width: 100%;
 }
 </style>
