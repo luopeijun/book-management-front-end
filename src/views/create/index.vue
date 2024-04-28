@@ -17,8 +17,8 @@ const bookId = computed(() => route.params.id)
 const pageType = computed(() => bookId.value ? 'Edit' : 'Create')
 
 const rules = {
-  title: [{ required: true, message: 'Please input Book Title', trigger: 'blur' }],
-  author: [{ required: true, message: 'Please input Book Author', trigger: 'blur' }]
+  title: [{ required: true, message: 'Please input Title', trigger: 'blur' }],
+  author: [{ required: true, message: 'Please input Author', trigger: 'blur' }]
 }
 
 onMounted(() => {
@@ -64,13 +64,13 @@ const onCancel = () => {
 <template>
   <Breadcrumb :current="pageType" />
   <el-form v-loading="loading" :model="form" label-width="auto" class="form" :rules="rules" ref="formRef">
-    <el-form-item label="Book Title" required prop="title">
+    <el-form-item label="Title" required prop="title">
       <el-input v-model="form.title" />
     </el-form-item>
-    <el-form-item label="Book Author" prop="author" required>
+    <el-form-item label="Author" prop="author" required>
       <el-input v-model="form.author" />
     </el-form-item>
-    <el-form-item label="Book Year" prop="year">
+    <el-form-item label="Year" prop="year">
       <el-date-picker
         v-model="form.year"
         placeholder="Pick a year"
@@ -78,7 +78,7 @@ const onCancel = () => {
         value-format="YYYY"
       />
     </el-form-item>
-    <el-form-item label="Book ISBN" prop="isbn">
+    <el-form-item label="ISBN" prop="isbn">
       <el-input v-model="form.isbn" />
     </el-form-item>
     <el-form-item>
