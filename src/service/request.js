@@ -13,7 +13,7 @@ const service = axios.create({
 service.interceptors.response.use(
   async (response) => {
     const res = response.data
-    if (response.status !== 200) {
+    if (response.status < 200 || response.status >= 300) {
       ElMessage({
         type: 'error',
         message: res.message || 'error',
@@ -43,7 +43,7 @@ export default {
         data,
       })
         .then(res => {
-          resolve(res.data)
+          resolve(res)
         })
         .catch(err => {
           reject(err)
@@ -59,7 +59,7 @@ export default {
         params: data
       })
         .then(res => {
-          resolve(res.data)
+          resolve(res)
         })
         .catch(err => {
           reject(err)
