@@ -17,6 +17,14 @@ onMounted(() => {
 const goToCreate = () => {
   router.push({ name: 'create' })
 }
+
+const handleEdit = (id) => {
+  router.push({ name: 'edit', params: { id } })
+}
+
+const handleDelete = (id) => {
+  console.log(id)
+}
 </script>
 
 <template>
@@ -27,6 +35,20 @@ const goToCreate = () => {
     <el-table-column prop="author" label="Author" min-width="180" />
     <el-table-column prop="year" label="Year" min-width="100" />
     <el-table-column prop="isbn" label="ISBN" min-width="250" />
+    <el-table-column label="Operations" min-width="200">
+      <template #default="scope">
+        <el-button size="small" @click="handleEdit(scope.row.id)">
+          Edit
+        </el-button>
+        <el-button
+          size="small"
+          type="danger"
+          @click="handleDelete(scope.row.id)"
+        >
+          Delete
+        </el-button>
+      </template>
+    </el-table-column>
   </el-table>
 </template>
 
