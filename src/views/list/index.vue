@@ -18,6 +18,10 @@ const goToCreate = () => {
   router.push({ name: 'create' })
 }
 
+const goToDetail = (id) => {
+  router.push({ name: 'detail', params: { id } })
+}
+
 const handleEdit = (id) => {
   router.push({ name: 'edit', params: { id } })
 }
@@ -37,7 +41,10 @@ const handleDelete = (id) => {
     <el-table-column prop="isbn" label="ISBN" min-width="250" />
     <el-table-column label="Operations" min-width="200">
       <template #default="scope">
-        <el-button size="small" @click="handleEdit(scope.row.id)">
+        <el-button size="small" @click="goToDetail(scope.row.id)">
+          Detail
+        </el-button>
+        <el-button size="small" type="primary" @click="handleEdit(scope.row.id)">
           Edit
         </el-button>
         <el-button
