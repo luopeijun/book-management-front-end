@@ -1,16 +1,17 @@
 <script setup>
 import Breadcrumb from '@/components/Breadcrumb/index.vue'
-import { computed, ref } from 'vue'
-import { createBook } from '@/service/api.js'
+import { computed, onMounted, ref } from 'vue'
+import { createBook, getBookDetail } from '@/service/api.js'
 import { ElMessage } from 'element-plus'
 import router from '@/router/index.js'
 import { useRoute } from 'vue-router'
+import { isEmpty, get } from 'lodash'
 
 const form = ref({})
 const formRef = ref()
 const loading = ref(false)
 
-const route = useRoute();
+const route = useRoute()
 const bookId = computed(() => route.params.id)
 
 const pageType = computed(() => bookId.value ? 'Edit' : 'Create')
@@ -19,6 +20,21 @@ const rules = {
   title: [{ required: true, message: 'Please input Book Title', trigger: 'blur' }],
   author: [{ required: true, message: 'Please input Book Author', trigger: 'blur' }]
 }
+
+onMounted(() => {
+  if (isEmpty(bookId.value)) {
+    return;
+  }
+  getBookDetail(bookId.value).then(res => {
+    form.value = {
+      title: get(res, 'title'),
+      author: get(res, 'author'),
+      year: get(res, 'year') ? res.year.toString() : undefined,
+      isbn: get(res, 'isbn')
+    }
+  })
+})
+
 
 const onSubmit = () => {
   formRef.value.validate((valid) => {
@@ -64,7 +80,7 @@ const onCancel = () => {
       <el-input v-model="form.isbn" />
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="onSubmit">{{ pageType }}</el-button>
+      <el-button type="primary" @click="onSubmit">Confirm</el-button>
       <el-button @click="onCancel">Cancel</el-button>
     </el-form-item>
   </el-form>
