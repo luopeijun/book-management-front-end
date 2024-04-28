@@ -6,7 +6,7 @@ defineProps({
 
 <template>
   <el-breadcrumb separator=">" class="breadcrumb">
-    <el-breadcrumb-item to="/">HomePage</el-breadcrumb-item>
+    <el-breadcrumb-item to="/">Book Management</el-breadcrumb-item>
     <el-breadcrumb-item>
       {{ current }}
     </el-breadcrumb-item>

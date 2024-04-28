@@ -35,7 +35,7 @@ export default {
       service({
         method: 'post',
         url,
-        data,
+        data
       })
         .then(res => {
           resolve(res)
@@ -67,7 +67,7 @@ export default {
       service({
         method: 'put',
         url,
-        data,
+        data
       })
         .then(res => {
           resolve(res)
@@ -77,4 +77,20 @@ export default {
         })
     })
   },
+
+  delete (url, data) {
+    return new Promise((resolve, reject) => {
+      service({
+        method: 'delete',
+        url,
+        data
+      })
+        .then(res => {
+          resolve(res)
+        })
+        .catch(err => {
+          reject(err)
+        })
+    })
+  }
 }

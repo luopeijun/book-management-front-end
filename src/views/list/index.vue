@@ -1,17 +1,22 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-import { getBookList } from '@/service/api.js'
+import { deleteBook, getBookList } from '@/service/api.js'
 import router from '@/router/index.js'
 import Breadcrumb from '@/components/Breadcrumb/index.vue'
+import { ElMessage, ElMessageBox } from 'element-plus'
 
 const tableData = ref([])
 const loading = ref(false)
 
-onMounted(() => {
+const refresh = () => {
   loading.value = true
   getBookList().then(res => {
     tableData.value = res
   }).finally(() => loading.value = false)
+}
+
+onMounted(() => {
+  refresh()
 })
 
 const goToCreate = () => {
@@ -27,7 +32,31 @@ const handleEdit = (id) => {
 }
 
 const handleDelete = (id) => {
-  console.log(id)
+  ElMessageBox.confirm(
+    'It will permanently delete the book. Continue?',
+    'Warning',
+    {
+      confirmButtonText: 'OK',
+      cancelButtonText: 'Cancel',
+      type: 'warning'
+    }
+  )
+    .then(() => {
+      deleteBook(id).then(() => {
+        ElMessage({
+          type: 'success',
+          message: 'Delete completed'
+        })
+        refresh()
+      })
+
+    })
+    .catch(() => {
+      ElMessage({
+        type: 'info',
+        message: 'Delete canceled'
+      })
+    })
 }
 </script>
 

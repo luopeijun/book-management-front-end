@@ -3,8 +3,9 @@ import { computed, onMounted, ref } from 'vue'
 import { get } from 'lodash'
 import Breadcrumb from '@/components/Breadcrumb/index.vue'
 import { useRoute } from 'vue-router'
-import { getBookDetail } from '@/service/api.js'
+import { deleteBook, getBookDetail } from '@/service/api.js'
 import router from '@/router/index.js'
+import { ElMessage, ElMessageBox } from 'element-plus'
 
 const route = useRoute()
 const bookId = computed(() => route.params.id)
@@ -12,6 +13,34 @@ const detail = ref({})
 
 const handleEdit = () => {
   router.push({ name: 'edit', params: { id: bookId.value } })
+}
+
+const handleDelete = () => {
+  ElMessageBox.confirm(
+    'It will permanently delete the book. Continue?',
+    'Warning',
+    {
+      confirmButtonText: 'OK',
+      cancelButtonText: 'Cancel',
+      type: 'warning'
+    }
+  )
+    .then(() => {
+      deleteBook(bookId.value).then(() => {
+        ElMessage({
+          type: 'success',
+          message: 'Delete completed'
+        })
+        router.push({ name: 'list' })
+      })
+
+    })
+    .catch(() => {
+      ElMessage({
+        type: 'info',
+        message: 'Delete canceled'
+      })
+    })
 }
 
 onMounted(() => {
@@ -47,7 +76,7 @@ onMounted(() => {
       </el-button>
       <el-button
         type="danger"
-        @click="handleDelete(scope.row.id)"
+        @click="handleDelete()"
       >
         Delete
       </el-button>

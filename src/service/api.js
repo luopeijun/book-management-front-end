@@ -15,3 +15,7 @@ export const getBookDetail = (id) => {
 export const updateBookDetail = (data) => {
   return request.put(`/api/books/${data.id}`, data)
 }
+
+export const deleteBook = (id) => {
+  return request.delete(`/api/books/${id}`)
+}
