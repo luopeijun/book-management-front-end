@@ -1,8 +1,8 @@
 # book-management-front-end
 
 ## Environment
-node.js 18.20.2
-npm 10.5.0
+* node.js 18.20.2
+* npm 10.5.0
 
 ## Project Setup
 
