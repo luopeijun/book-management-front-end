@@ -30,11 +30,6 @@ service.interceptors.response.use(
 )
 
 export default {
-  /**
-   * @param {String} url
-   * @param {Object} data
-   * @returns Promise
-   */
   post (url, data) {
     return new Promise((resolve, reject) => {
       service({
@@ -65,5 +60,21 @@ export default {
           reject(err)
         })
     })
-  }
+  },
+
+  put (url, data) {
+    return new Promise((resolve, reject) => {
+      service({
+        method: 'put',
+        url,
+        data,
+      })
+        .then(res => {
+          resolve(res)
+        })
+        .catch(err => {
+          reject(err)
+        })
+    })
+  },
 }

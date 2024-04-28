@@ -11,3 +11,7 @@ export const createBook = (data) => {
 export const getBookDetail = (id) => {
   return request.get(`/api/books/${id}`)
 }
+
+export const updateBookDetail = (data) => {
+  return request.put(`/api/books/${data.id}`, data)
+}

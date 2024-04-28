@@ -1,7 +1,7 @@
 <script setup>
 import Breadcrumb from '@/components/Breadcrumb/index.vue'
 import { computed, onMounted, ref } from 'vue'
-import { createBook, getBookDetail } from '@/service/api.js'
+import { createBook, getBookDetail, updateBookDetail } from '@/service/api.js'
 import { ElMessage } from 'element-plus'
 import router from '@/router/index.js'
 import { useRoute } from 'vue-router'
@@ -23,10 +23,11 @@ const rules = {
 
 onMounted(() => {
   if (isEmpty(bookId.value)) {
-    return;
+    return
   }
   getBookDetail(bookId.value).then(res => {
     form.value = {
+      id: get(res, 'id'),
       title: get(res, 'title'),
       author: get(res, 'author'),
       year: get(res, 'year') ? res.year.toString() : undefined,
@@ -38,12 +39,13 @@ onMounted(() => {
 
 const onSubmit = () => {
   formRef.value.validate((valid) => {
+    const api = pageType.value === 'Edit' ? updateBookDetail : createBook
     if (valid) {
       loading.value = true
-      createBook(form.value)
+      api(form.value)
         .then(() => {
           ElMessage({
-            message: 'Create Success',
+            message: `${pageType.value} Success`,
             type: 'success'
           })
           router.push({ name: 'list' })
