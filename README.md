@@ -15,3 +15,6 @@ npm install
 ```sh
 npm run serve
 ```
+
+## Server Address
+http://3.26.51.100/
