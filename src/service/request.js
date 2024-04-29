@@ -3,10 +3,14 @@ import { ElMessage } from 'element-plus'
 
 const service = axios.create({
   headers: {
-    'Content-Type': 'application/json;charset=UTF-8'
+    'Content-Type': 'application/json;charset=UTF-8',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET,POST,DELETE,PUT',
+    'Access-Control-Allow-Credentials': 'true'
   },
   timeout: 5000,
   withCredentials: true,
+  crossDomain: true,
   responseType: 'json'
 })
 
